@@ -1,6 +1,6 @@
 """This is the interactive file that is meant to be run using the tracked
 times folder and the main.py file"""
-from main import *
+from classes_and_code import *
 
 name_set = False
 bday_set = True
@@ -84,6 +84,7 @@ def deleteday(entries_list):
 
 def next_period(entries_list, stats_list):
     """Check when the next period will be"""
+    last_date = None
     for i in range(len(entries_list)):
         if entries_list[-i - 1].period:
             last_date = entries_list[-i - 1]
@@ -92,15 +93,17 @@ def next_period(entries_list, stats_list):
     update_cycle_len(stats_list, entries_list)
 
     median_period = median(entries_list)
-
-    cycle_days = stats_list[0]
-    next_day = last_date.date + datetime.timedelta(days=cycle_days)
-    next_day_low_res = datetime.date(next_day.year, next_day.month, next_day.day)
-    print ("\nYour average cycle length is around " + str(cycle_days) + " days long and your next period is expected on " + str(next_day_low_res) + " \nThis prediction might be off by " + str(stats_list[1]) + " days 3 \n You also have a median cycle length of " + str(median_period) + " days \n")
-    if median_period > cycle_days:
-        print ("I have noticed that you typically also have a late period.\n")
-    else:
-        print ("I have noticed that you typically also have an early period.\n")
+    if median_period == 0:
+        median_period = stats_list[0]
+    if last_date is not None:
+        cycle_days = stats_list[0]
+        next_day = last_date.date + datetime.timedelta(days=cycle_days)
+        next_day_low_res = datetime.date(next_day.year, next_day.month, next_day.day)
+        print ("\nYour average cycle length is around " + str(cycle_days) + " days long and your next period is expected on " + str(next_day_low_res) + " \nThis prediction might be off by " + str(stats_list[1]) + " days \n You also have a median cycle length of " + str(median_period) + " days \n")
+        if median_period > cycle_days:
+            print ("I have noticed that you typically also have a late period.\n")
+        else:
+            print ("I have noticed that you typically also have an early period.\n")
 
 def check_days(entries_list):
     """Print a list of periods"""

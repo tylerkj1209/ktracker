@@ -127,7 +127,8 @@ def cycle_stdev(stats_list, entry_list) -> float:
         total = 0
         for item in v_list:
             total += item
-        total = total / (len(v_list) - 1)
+        if len(v_list) > 1:
+            total = total / (len(v_list) - 1)
         return sqrt(total)
 
 
@@ -144,7 +145,8 @@ def median(entry_list):
             last_date = item
 
     avg_list.sort()
-
+    if len(avg_list) <= 1:
+        return 0
     return avg_list[len(avg_list) // 2]
 
 def update_cycle_len(stats_list, entry_list):
