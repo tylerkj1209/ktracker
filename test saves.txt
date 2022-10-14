@@ -1,0 +1,2 @@
+avg cycle length, stdev cycle length, avg period length, stdev cycle length, avg ovulation start
+25, 5, 5.0, 0.0, 12.0
